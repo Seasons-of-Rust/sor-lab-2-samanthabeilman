@@ -22,7 +22,7 @@ fn validate_grading_system() {
 
 /// Calculate the grade
 fn calculate_grade(carrots: i32, nuts: i32, seeds: i32) -> i32 {
-    todo!()
+    return (carrots + nuts) * (carrots + nuts + seeds);
 }
 
 /// Validate the safety system
@@ -42,6 +42,13 @@ fn validate_safety_system() {
     println!("Validation complete ✅\n");
 }
 
+/*A student is considered safe if:
+
+- There are no wolves nearby
+- It is daytime
+- Either the above, or the student has a carrot
+- Either the above, or the student has more than 3 friends nearby */
+
 /// Calculate the safety status
 fn calculate_safety_status(
     wolves_nearby: bool,
@@ -49,7 +56,17 @@ fn calculate_safety_status(
     has_carrot: bool,
     friends_nearby: i32,
 ) -> bool {
-    todo!()
+    let mut out: bool = false;
+
+    if !wolves_nearby || day_time {
+        out = true;
+    } else if has_carrot {
+        out = true;
+    } else if friends_nearby > 3 {
+        out = true;
+    }
+
+    return out;
 }
 
 /// Validate the simulation
@@ -65,9 +82,20 @@ fn validate_simulation() {
     println!("Validation complete ✅\n");
 }
 
-/// Simulate the rabbit population
+/// Simulate the rabbit population (if all days are unsafe)
 fn simulate(starting_rabbits: i128) -> i32 {
-    todo!()
+    let mut days_passed: i32 = 0;
+    let mut current_rabbits: i128 = starting_rabbits;
+
+    while current_rabbits > 1 {
+        if current_rabbits % 2 == 0 {
+            current_rabbits /= 2;
+        } else {
+            current_rabbits = (3 * current_rabbits) + 1;
+        }
+        days_passed += 1;
+    }
+    return days_passed;
 }
 
 #[cfg(test)]
